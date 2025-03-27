@@ -1,0 +1,18 @@
+{
+  "name": "AI Tutor",
+  "short_name": "AI Tutor",
+  "theme_color": "#4f46e5",
+  "background_color": "#ffffff",
+  "display": "standalone",
+  "orientation": "portrait",
+  "scope": "/",
+  "start_url": "/",
+  "description": "AI-powered tutoring system that adapts to your learning style",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "64x64",
+      "type": "image/x-icon"
+    }
+  ]
+} 

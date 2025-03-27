@@ -1,0 +1,51 @@
+{
+  "name": "ai-tutor",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "setup": "node setup-env.js",
+    "security-check": "npm audit && next lint",
+    "update-deps": "npm update"
+  },
+  "dependencies": {
+    "@google/generative-ai": "^0.2.1",
+    "@radix-ui/react-aspect-ratio": "^1.1.2",
+    "@radix-ui/react-avatar": "^1.1.3",
+    "@radix-ui/react-dialog": "^1.1.6",
+    "@radix-ui/react-slot": "^1.1.2",
+    "@types/node": "20.10.0",
+    "@types/react": "18.2.38",
+    "@types/react-dom": "18.2.17",
+    "axios": "1.8.4",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "firebase": "10.14.1",
+    "firebase-admin": "^13.2.0",
+    "lucide-react": "^0.292.0",
+    "next": "14.2.26",
+    "nprogress": "^0.2.0",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-markdown": "^10.1.0",
+    "react-window": "^1.8.11",
+    "rehype-sanitize": "^6.0.0",
+    "swr": "^2.3.3",
+    "tailwind-merge": "^2.6.0",
+    "tailwindcss": "3.3.5",
+    "tailwindcss-animate": "^1.0.7",
+    "typescript": "5.2.2"
+  },
+  "devDependencies": {
+    "@shadcn/ui": "^0.0.4",
+    "@types/nprogress": "^0.2.3",
+    "@types/react-window": "^1.8.8",
+    "autoprefixer": "10.4.16",
+    "eslint": "8.54.0",
+    "eslint-config-next": "14.2.26",
+    "postcss": "8.4.31"
+  }
+}

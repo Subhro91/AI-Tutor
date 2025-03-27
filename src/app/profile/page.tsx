@@ -102,12 +102,12 @@ export default function ProfilePage() {
             <ProfileHeader profile={profile} />
             
             {/* Tabs navigation */}
-            <div className="flex border-b mb-6">
+            <div className="flex border-b dark:border-gray-700 mb-6">
               <button
                 className={`px-4 py-2 font-medium ${
                   activeTab === 'profile' 
-                    ? 'text-primary-600 border-b-2 border-primary-600' 
-                    : 'text-gray-600 hover:text-gray-900'
+                    ? 'text-primary-600 dark:text-primary-400 border-b-2 border-primary-600 dark:border-primary-400' 
+                    : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100'
                 }`}
                 onClick={() => setActiveTab('profile')}
               >
@@ -116,8 +116,8 @@ export default function ProfilePage() {
               <button
                 className={`px-4 py-2 font-medium ${
                   activeTab === 'goals' 
-                    ? 'text-primary-600 border-b-2 border-primary-600' 
-                    : 'text-gray-600 hover:text-gray-900'
+                    ? 'text-primary-600 dark:text-primary-400 border-b-2 border-primary-600 dark:border-primary-400' 
+                    : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100'
                 }`}
                 onClick={() => setActiveTab('goals')}
               >
@@ -126,8 +126,8 @@ export default function ProfilePage() {
               <button
                 className={`px-4 py-2 font-medium ${
                   activeTab === 'notifications' 
-                    ? 'text-primary-600 border-b-2 border-primary-600' 
-                    : 'text-gray-600 hover:text-gray-900'
+                    ? 'text-primary-600 dark:text-primary-400 border-b-2 border-primary-600 dark:border-primary-400' 
+                    : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100'
                 }`}
                 onClick={() => setActiveTab('notifications')}
               >

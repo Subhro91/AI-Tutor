@@ -94,7 +94,7 @@ export default function ProfileHeader({ profile }: ProfileHeaderProps) {
   };
   
   return (
-    <div className="bg-white rounded-lg shadow-sm p-6 mb-6 relative">
+    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 mb-6 relative dark:border dark:border-gray-700">
       <div className="flex flex-col md:flex-row items-center">
         {/* Profile Image */}
         <div className="relative mb-4 md:mb-0 md:mr-6">
@@ -111,7 +111,7 @@ export default function ProfileHeader({ profile }: ProfileHeaderProps) {
             {/* Upload progress overlay */}
             {isUploading && (
               <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-                <div className="w-3/4 bg-gray-200 rounded-full h-2.5">
+                <div className="w-3/4 bg-gray-200 dark:bg-gray-600 rounded-full h-2.5">
                   <div 
                     className="bg-blue-600 h-2.5 rounded-full"
                     style={{ width: `${uploadProgress}%` }}
@@ -122,8 +122,8 @@ export default function ProfileHeader({ profile }: ProfileHeaderProps) {
           </div>
           
           {/* Photo upload button */}
-          <label className="absolute bottom-0 right-0 p-1 bg-white rounded-full shadow cursor-pointer border border-gray-200 hover:bg-gray-100 transition-colors">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <label className="absolute bottom-0 right-0 p-1 bg-white dark:bg-gray-700 rounded-full shadow cursor-pointer border border-gray-200 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-700 dark:text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
             </svg>
@@ -138,7 +138,7 @@ export default function ProfileHeader({ profile }: ProfileHeaderProps) {
           
           {/* Error message */}
           {error && (
-            <div className="absolute -bottom-10 left-0 right-0 bg-red-50 text-red-600 p-2 text-xs rounded shadow">
+            <div className="absolute -bottom-10 left-0 right-0 bg-red-50 dark:bg-red-900/30 text-red-600 dark:text-red-400 p-2 text-xs rounded shadow">
               {error}
             </div>
           )}
@@ -146,11 +146,11 @@ export default function ProfileHeader({ profile }: ProfileHeaderProps) {
         
         {/* User Info */}
         <div>
-          <h1 className="text-2xl font-bold">{profile.displayName || 'User Profile'}</h1>
-          <p className="text-gray-600">{profile.email}</p>
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">{profile.displayName || 'User Profile'}</h1>
+          <p className="text-gray-600 dark:text-gray-400">{profile.email}</p>
           
           {profile.bio && (
-            <p className="mt-2 text-gray-700">{profile.bio}</p>
+            <p className="mt-2 text-gray-700 dark:text-gray-300">{profile.bio}</p>
           )}
         </div>
       </div>

@@ -33,8 +33,8 @@ const NavLink = memo(({
     className={cn(
       "flex items-center p-3 rounded-lg transition-colors",
       isActive
-        ? "bg-primary-50 text-primary-700 font-medium"
-        : "hover:bg-gray-50 text-gray-700"
+        ? "bg-primary-50 dark:bg-primary-900/20 text-primary-700 dark:text-primary-300 font-medium"
+        : "hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300"
     )}
   >
     {children}
@@ -82,9 +82,9 @@ function MobileNav() {
             </svg>
           </Button>
         </SheetTrigger>
-        <SheetContent side="right" className="w-[300px] sm:w-[350px] pr-0">
+        <SheetContent side="right" className="w-[300px] sm:w-[350px] pr-0 bg-white dark:bg-gray-900 border-l dark:border-gray-800">
           <SheetHeader className="mb-4">
-            <SheetTitle className="text-primary-600">AI Tutor</SheetTitle>
+            <SheetTitle className="text-primary-600 dark:text-primary-400">AI Tutor</SheetTitle>
           </SheetHeader>
           
           <div className="flex flex-col space-y-4 pr-6">
@@ -153,10 +153,10 @@ function MobileNav() {
                         Notifications
                       </NavLink>
                     </li>
-                    <li className="mt-6 pt-6 border-t border-gray-200">
+                    <li className="mt-6 pt-6 border-t border-gray-200 dark:border-gray-800">
                       <button
                         onClick={handleSignOut}
-                        className="flex items-center p-3 text-gray-700 rounded-lg hover:bg-gray-50 w-full text-left"
+                        className="flex items-center p-3 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 w-full text-left"
                       >
                         <svg className="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />

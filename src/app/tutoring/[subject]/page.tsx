@@ -217,30 +217,30 @@ export default function TutoringPage() {
   return (
     <div className="container max-w-4xl mx-auto px-4 py-4 min-h-screen flex flex-col">
       <div className="mb-4">
-        <h1 className="text-3xl font-bold capitalize">{subjectData?.name || subject} Tutoring</h1>
+        <h1 className="text-3xl font-bold capitalize text-foreground">{subjectData?.name || subject} Tutoring</h1>
         {subjectData?.topic && (
           <div className="flex items-center mt-1">
-            <span className="text-gray-700 font-medium">{subjectData.topic.title}</span>
+            <span className="text-foreground font-medium">{subjectData.topic.title}</span>
             {subjectData.subtopic && (
               <>
-                <span className="mx-2 text-gray-400">•</span>
-                <span className="text-gray-600">{subjectData.subtopic.title}</span>
+                <span className="mx-2 text-muted-foreground">•</span>
+                <span className="text-muted-foreground">{subjectData.subtopic.title}</span>
               </>
             )}
           </div>
         )}
-        <p className="text-gray-600 mt-1">Ask any question to get personalized help</p>
+        <p className="text-muted-foreground mt-1">Ask any question to get personalized help</p>
       </div>
 
       {/* Example questions */}
       {exampleQuestions.length > 0 && messages.length === 0 && (
-        <div className="mb-4 bg-blue-50 rounded-lg p-4">
-          <h3 className="font-medium text-blue-800 mb-2">Try asking:</h3>
+        <div className="mb-4 bg-primary/5 dark:bg-primary/10 rounded-lg p-4">
+          <h3 className="font-medium text-primary mb-2">Try asking:</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
             {exampleQuestions.map((question, index) => (
               <button
                 key={index}
-                className="text-left text-blue-700 bg-blue-100 hover:bg-blue-200 rounded-md px-3 py-2 text-sm transition-colors"
+                className="text-left text-primary bg-primary/10 hover:bg-primary/20 rounded-md px-3 py-2 text-sm transition-colors"
                 onClick={() => handleMessageSent(question)}
               >
                 {question}
@@ -250,31 +250,21 @@ export default function TutoringPage() {
         </div>
       )}
 
-      {/* Chat container - fixed height and better spacing */}
-      <div className="flex-1 flex flex-col bg-gray-50 rounded-lg mb-4 overflow-hidden" style={{ minHeight: '500px' }}>
-        {/* Display persistent chat history from Firestore */}
+      {/* Chat container with improved scrolling */}
+      <div className="flex-1 mb-4 bg-card border border-border rounded-lg overflow-hidden flex flex-col">
         <div className="flex-1 overflow-hidden">
           <ChatHistory subjectId={subject} refreshChat={refreshChat} />
         </div>
-        
-        {/* Display typing indicator */}
-        {isProcessing && (
-          <div className="flex justify-start p-4 border-t border-gray-100">
-            <div className="bg-white border border-gray-200 rounded-lg p-3">
-              <div className="flex items-center space-x-3">
-                <LoadingSpinner size="sm" />
-                <span className="text-sm text-gray-600">AI Tutor is thinking...</span>
-              </div>
-            </div>
-          </div>
-        )}
       </div>
 
-      {/* Message input with Firestore integration */}
-      <ChatInput 
-        subjectId={subject} 
-        onMessageSent={handleMessageSent} 
-      />
+      {/* Input area */}
+      <div className="mt-auto">
+        <ChatInput 
+          onSendMessage={handleMessageSent} 
+          isProcessing={isProcessing}
+          subjectId={subject}
+        />
+      </div>
     </div>
   )
 } 

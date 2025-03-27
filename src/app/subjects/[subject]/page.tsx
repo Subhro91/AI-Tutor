@@ -142,16 +142,16 @@ export default function SubjectPage() {
   const currentSubtopic = currentTopic?.subtopics[activeSubtopicIndex];
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto px-4 py-8 dark:bg-gray-900">
       <div className="flex justify-between items-center mb-8">
         <div>
           <h1 
-            className="text-3xl font-bold mb-2" 
+            className="text-3xl font-bold mb-2 dark:text-gray-100" 
             style={{ color: subject.color }}
           >
             {subject.name}
           </h1>
-          <p className="text-gray-600">{subject.description}</p>
+          <p className="text-gray-600 dark:text-gray-300">{subject.description}</p>
         </div>
         
         <Button 
@@ -162,16 +162,16 @@ export default function SubjectPage() {
         </Button>
       </div>
       
-      <div className="bg-white rounded-lg shadow-sm p-6 mb-8">
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 mb-8">
         <LearningPath subject={subject} completedTopics={completedTopics} />
       </div>
       
-      <div className="bg-white rounded-lg shadow-sm p-6">
-        <h2 className="text-2xl font-bold mb-4">About this Subject</h2>
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6">
+        <h2 className="text-2xl font-bold mb-4 dark:text-gray-100">About this Subject</h2>
         <div className="space-y-4">
           <div>
             <h3 className="text-lg font-medium">What you'll learn</h3>
-            <ul className="list-disc list-inside mt-2 space-y-1 text-gray-700">
+            <ul className="list-disc list-inside mt-2 space-y-1 text-gray-700 dark:text-gray-300">
               {subject.topics.slice(0, 5).map(topic => (
                 <li key={topic.id}>{topic.title}</li>
               ))}
@@ -181,7 +181,7 @@ export default function SubjectPage() {
           
           <div>
             <h3 className="text-lg font-medium">Prerequisites</h3>
-            <p className="mt-2 text-gray-700">
+            <p className="mt-2 text-gray-700 dark:text-gray-300">
               {subject.topics.some(t => t.prerequisiteTopicIds && t.prerequisiteTopicIds.length > 0)
                 ? "Some topics in this subject have prerequisites. These will be unlocked as you progress."
                 : "No prerequisites needed for this subject. Start learning right away!"}
@@ -190,7 +190,7 @@ export default function SubjectPage() {
           
           <div>
             <h3 className="text-lg font-medium">Learning Format</h3>
-            <p className="mt-2 text-gray-700">
+            <p className="mt-2 text-gray-700 dark:text-gray-300">
               This subject is divided into topics and subtopics. Each subtopic includes key points, 
               resources, and practice materials. Your AI tutor will guide you through the content
               and answer your questions in real-time.
@@ -200,14 +200,14 @@ export default function SubjectPage() {
       </div>
 
       {/* Topics Navigation - Desktop */}
-      <div className="hidden md:flex mb-4 border-b">
+      <div className="hidden md:flex mb-4 border-b dark:border-gray-700">
         {subject.topics.map((topic, index) => (
           <button
             key={topic.id}
             className={`px-4 py-2 font-medium ${
               index === activeTopicIndex 
                 ? 'text-primary-600 border-b-2 border-primary-600' 
-                : 'text-gray-600 hover:text-gray-900'
+                : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white'
             }`}
             onClick={() => {
               setActiveTopicIndex(index);
@@ -230,12 +230,12 @@ export default function SubjectPage() {
             onClick={navigateToPrevTopic}
             disabled={activeTopicIndex === 0}
           >
-            <svg className={`w-5 h-5 ${activeTopicIndex === 0 ? 'text-gray-300' : 'text-gray-600'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <svg className={`w-5 h-5 ${activeTopicIndex === 0 ? 'text-gray-300 dark:text-gray-700' : 'text-gray-600 dark:text-gray-400'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
             </svg>
           </button>
           
-          <span className="font-medium">
+          <span className="font-medium dark:text-gray-200">
             Topic {activeTopicIndex + 1} of {subject.topics.length}
           </span>
           
@@ -244,14 +244,14 @@ export default function SubjectPage() {
             onClick={navigateToNextTopic}
             disabled={activeTopicIndex === subject.topics.length - 1}
           >
-            <svg className={`w-5 h-5 ${activeTopicIndex === subject.topics.length - 1 ? 'text-gray-300' : 'text-gray-600'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <svg className={`w-5 h-5 ${activeTopicIndex === subject.topics.length - 1 ? 'text-gray-300 dark:text-gray-700' : 'text-gray-600 dark:text-gray-400'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
             </svg>
           </button>
         </div>
         
         <div className="text-center my-2">
-          <span className="font-medium text-lg">{currentTopic.title}</span>
+          <span className="font-medium text-lg dark:text-gray-200">{currentTopic.title}</span>
         </div>
       </div>
 
@@ -259,12 +259,12 @@ export default function SubjectPage() {
       <div className="mb-8">
         <Card>
           <CardHeader>
-            <CardTitle>{currentTopic.title}</CardTitle>
+            <CardTitle className="dark:text-gray-100">{currentTopic.title}</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="mb-4">{currentTopic.description}</p>
+            <p className="mb-4 dark:text-gray-300">{currentTopic.description}</p>
             
-            <h3 className="font-semibold text-lg mb-3">Subtopics</h3>
+            <h3 className="font-semibold text-lg mb-3 dark:text-gray-100">Subtopics</h3>
             
             {/* Subtopics Navigation - Desktop */}
             <div className="hidden md:block">
@@ -274,13 +274,13 @@ export default function SubjectPage() {
                     key={subtopic.id}
                     className={`p-3 rounded-lg text-left ${
                       index === activeSubtopicIndex
-                        ? 'bg-primary-100 text-primary-800 border border-primary-200'
-                        : 'bg-gray-50 hover:bg-gray-100'
+                        ? 'bg-primary-100 text-primary-800 border border-primary-200 dark:bg-primary-900/30 dark:text-primary-300 dark:border-primary-800'
+                        : 'bg-gray-50 hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-700'
                     }`}
                     onClick={() => setActiveSubtopicIndex(index)}
                   >
                     <div className="font-medium">{subtopic.title}</div>
-                    <div className="text-sm text-gray-600 mt-1 line-clamp-2">
+                    <div className="text-sm text-gray-600 dark:text-gray-400 mt-1 line-clamp-2">
                       {subtopic.description}
                     </div>
                   </button>
@@ -299,12 +299,12 @@ export default function SubjectPage() {
                   onClick={navigateToPrevSubtopic}
                   disabled={activeSubtopicIndex === 0 && activeTopicIndex === 0}
                 >
-                  <svg className={`w-5 h-5 ${activeSubtopicIndex === 0 && activeTopicIndex === 0 ? 'text-gray-300' : 'text-gray-600'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <svg className={`w-5 h-5 ${activeSubtopicIndex === 0 && activeTopicIndex === 0 ? 'text-gray-300 dark:text-gray-700' : 'text-gray-600 dark:text-gray-400'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                   </svg>
                 </button>
                 
-                <span className="font-medium text-sm">
+                <span className="font-medium text-sm dark:text-gray-300">
                   Lesson {activeSubtopicIndex + 1} of {currentTopic.subtopics.length}
                 </span>
                 
@@ -316,15 +316,15 @@ export default function SubjectPage() {
                     activeTopicIndex === subject.topics.length - 1
                   }
                 >
-                  <svg className={`w-5 h-5 ${activeSubtopicIndex === currentTopic.subtopics.length - 1 && activeTopicIndex === subject.topics.length - 1 ? 'text-gray-300' : 'text-gray-600'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <svg className={`w-5 h-5 ${activeSubtopicIndex === currentTopic.subtopics.length - 1 && activeTopicIndex === subject.topics.length - 1 ? 'text-gray-300 dark:text-gray-700' : 'text-gray-600 dark:text-gray-400'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                   </svg>
                 </button>
               </div>
               
-              <div className="p-4 bg-primary-50 rounded-lg">
-                <h4 className="font-medium text-primary-900 mb-1">{currentSubtopic.title}</h4>
-                <p className="text-sm text-primary-800">{currentSubtopic.description}</p>
+              <div className="p-4 bg-primary-50 dark:bg-primary-900/20 rounded-lg">
+                <h4 className="font-medium text-primary-900 dark:text-primary-300 mb-1">{currentSubtopic.title}</h4>
+                <p className="text-sm text-primary-800 dark:text-primary-200">{currentSubtopic.description}</p>
               </div>
             </div>
           </CardContent>
@@ -335,10 +335,10 @@ export default function SubjectPage() {
       <div>
         <Card>
           <CardHeader>
-            <CardTitle>{currentSubtopic.title}</CardTitle>
+            <CardTitle className="dark:text-gray-100">{currentSubtopic.title}</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="prose max-w-none">
+            <div className="prose max-w-none dark:prose-invert">
               <p>{currentSubtopic.description}</p>
               
               <h3>Key Points</h3>

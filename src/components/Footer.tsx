@@ -10,14 +10,14 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-white border-t py-8">
+    <footer className="bg-white dark:bg-gray-900 border-t dark:border-gray-800 py-8">
       <div className="container mx-auto px-5">
         <div className="flex flex-col md:flex-row justify-between items-center">
           <div className="mb-4 md:mb-0">
-            <Link href="/" className="text-xl font-bold text-primary-600">
+            <Link href="/" className="text-xl font-bold text-primary-600 dark:text-primary-400">
               AI Tutor
             </Link>
-            <p className="text-sm text-gray-500 mt-1">
+            <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
               Personalized learning for everyone
             </p>
           </div>
@@ -26,7 +26,7 @@ export default function Footer() {
               href="/" 
               className={cn(
                 buttonVariants({ variant: "link" }),
-                "text-gray-600 hover:text-primary-600 p-0 h-auto"
+                "text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 p-0 h-auto"
               )}
             >
               Home
@@ -37,7 +37,7 @@ export default function Footer() {
                 href="/auth/login" 
                 className={cn(
                   buttonVariants({ variant: "link" }),
-                  "text-gray-600 hover:text-primary-600 p-0 h-auto"
+                  "text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 p-0 h-auto"
                 )}
               >
                 Login
@@ -47,7 +47,7 @@ export default function Footer() {
                 href="/dashboard" 
                 className={cn(
                   buttonVariants({ variant: "link" }),
-                  "text-gray-600 hover:text-primary-600 p-0 h-auto"
+                  "text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 p-0 h-auto"
                 )}
               >
                 Dashboard
@@ -58,14 +58,14 @@ export default function Footer() {
               href="/help" 
               className={cn(
                 buttonVariants({ variant: "link" }),
-                "text-gray-600 hover:text-primary-600 p-0 h-auto"
+                "text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 p-0 h-auto"
               )}
             >
               Help
             </Link>
           </div>
         </div>
-        <div className="mt-8 pt-4 border-t text-center text-gray-500 text-sm">
+        <div className="mt-8 pt-4 border-t dark:border-gray-800 text-center text-gray-500 dark:text-gray-400 text-sm">
           &copy; {currentYear} AI Tutor. All rights reserved.
         </div>
       </div>

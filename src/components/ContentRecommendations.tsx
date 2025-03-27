@@ -9,11 +9,11 @@ import { getRecommendations, ContentRecommendation } from '@/lib/recommendation-
 // Separated loading skeleton for better performance
 const LoadingSkeleton = () => (
   <div className="card animate-pulse">
-    <div className="h-8 bg-gray-200 rounded mb-4 w-2/3"></div>
+    <div className="h-8 bg-muted rounded mb-4 w-2/3"></div>
     {[1, 2, 3].map((i) => (
       <div key={i} className="mb-3">
-        <div className="h-5 bg-gray-200 rounded w-full mb-2"></div>
-        <div className="h-4 bg-gray-200 rounded w-3/4"></div>
+        <div className="h-5 bg-muted rounded w-full mb-2"></div>
+        <div className="h-4 bg-muted rounded w-3/4"></div>
       </div>
     ))}
   </div>
@@ -29,14 +29,14 @@ const RecommendationItem = React.memo(({
 }) => {
   return (
     <div 
-      className="border border-gray-200 rounded-lg p-4 hover:bg-gray-50 cursor-pointer transition-colors duration-150"
+      className="border border-border rounded-lg p-4 hover:bg-secondary transition-colors duration-150 cursor-pointer"
       onClick={() => onClick(recommendation)}
     >
       <div className="flex items-start">
         {/* Icon based on type */}
         <div className="flex-shrink-0 mr-3">
           {recommendation.type === 'topic' && (
-            <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">
+            <div className="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-blue-600 dark:text-blue-400">
               <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
               </svg>
@@ -44,7 +44,7 @@ const RecommendationItem = React.memo(({
           )}
           
           {recommendation.type === 'subtopic' && (
-            <div className="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center text-green-600">
+            <div className="w-10 h-10 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center text-green-600 dark:text-green-400">
               <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
               </svg>
@@ -52,7 +52,7 @@ const RecommendationItem = React.memo(({
           )}
           
           {recommendation.type === 'resource' && (
-            <div className="w-10 h-10 rounded-full bg-yellow-100 flex items-center justify-center text-yellow-600">
+            <div className="w-10 h-10 rounded-full bg-yellow-100 dark:bg-yellow-900/30 flex items-center justify-center text-yellow-600 dark:text-yellow-400">
               <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
               </svg>
@@ -63,21 +63,21 @@ const RecommendationItem = React.memo(({
         {/* Content */}
         <div className="flex-1">
           <div className="flex justify-between items-start">
-            <h4 className="text-lg font-medium">{recommendation.title}</h4>
+            <h4 className="text-lg font-medium text-foreground">{recommendation.title}</h4>
             <span className={`text-xs px-2 py-1 rounded-full ${
               recommendation.difficulty === 'beginner' 
-                ? 'bg-green-100 text-green-800' 
+                ? 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400' 
                 : recommendation.difficulty === 'intermediate'
-                  ? 'bg-yellow-100 text-yellow-800'
-                  : 'bg-red-100 text-red-800'
+                  ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400'
+                  : 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400'
             }`}>
               {recommendation.difficulty}
             </span>
           </div>
           
-          <p className="text-sm text-gray-600 mt-1">{recommendation.description}</p>
+          <p className="text-sm text-muted-foreground mt-1">{recommendation.description}</p>
           
-          <div className="mt-2 flex items-center justify-between text-xs text-gray-500">
+          <div className="mt-2 flex items-center justify-between text-xs text-muted-foreground">
             <div className="flex items-center">
               <span className="text-sm font-medium" style={{ color: `var(--${recommendation.subjectId}-color, #3182CE)` }}>
                 {recommendation.subject}
@@ -170,15 +170,15 @@ export default function ContentRecommendations() {
     if (recommendations.length === 0) {
       return (
         <div className="card">
-          <h3 className="heading-2 mb-3">Recommended for You</h3>
-          <p className="paragraph">Start learning a subject to get personalized recommendations!</p>
+          <h3 className="text-xl font-medium mb-3 text-foreground">Recommended for You</h3>
+          <p className="text-muted-foreground">Start learning a subject to get personalized recommendations!</p>
         </div>
       );
     }
     
     return (
       <div className="card">
-        <h3 className="heading-2 mb-4">Recommended for You</h3>
+        <h3 className="text-xl font-medium mb-4 text-foreground">Recommended for You</h3>
         
         <div className="space-y-4">
           {recommendations.map((rec) => (

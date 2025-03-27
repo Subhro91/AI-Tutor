@@ -76,7 +76,7 @@ export default function LoginPage() {
   }, [router]);
 
   return (
-    <div className="grid w-full min-h-screen place-items-center bg-gray-50 px-4 py-12">
+    <div className="grid w-full min-h-screen place-items-center bg-background px-4 py-12">
       <Card className="w-full max-w-md">
         <CardHeader className="space-y-1">
           <CardTitle className="text-2xl font-bold text-center">AI Tutor</CardTitle>
@@ -88,7 +88,7 @@ export default function LoginPage() {
         <form onSubmit={handleEmailSignIn}>
           <CardContent className="grid gap-4">
             {error && (
-              <div className="p-3 bg-red-50 text-red-500 text-sm rounded-md">
+              <div className="p-3 bg-red-50 dark:bg-red-900/20 text-red-500 dark:text-red-400 text-sm rounded-md">
                 {error}
               </div>
             )}
@@ -116,10 +116,10 @@ export default function LoginPage() {
 
             <div className="relative">
               <div className="absolute inset-0 flex items-center">
-                <span className="w-full border-t border-gray-300" />
+                <span className="w-full border-t border-border" />
               </div>
               <div className="relative flex justify-center text-xs uppercase">
-                <span className="bg-white px-2 text-gray-500">Or continue with</span>
+                <span className="bg-card px-2 text-muted-foreground">Or continue with</span>
               </div>
             </div>
 
@@ -141,7 +141,7 @@ export default function LoginPage() {
                 <Label htmlFor="password">Password</Label>
                 <Link 
                   href="/auth/reset-password" 
-                  className="text-sm text-primary-600 hover:underline"
+                  className="text-sm text-primary hover:underline"
                 >
                   Forgot password?
                 </Link>
@@ -166,9 +166,9 @@ export default function LoginPage() {
               {loading ? 'Signing in...' : 'Sign in'}
             </Button>
             
-            <p className="mt-4 text-center text-sm text-gray-500">
+            <p className="mt-4 text-center text-sm text-muted-foreground">
               Don&apos;t have an account?{' '}
-              <Link href="/auth/register" className="text-primary-600 hover:underline">
+              <Link href="/auth/register" className="text-primary hover:underline">
                 Create an account
               </Link>
             </p>

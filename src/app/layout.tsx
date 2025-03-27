@@ -10,6 +10,16 @@ import { Suspense } from 'react';
 // Import PageTransition component for loading animation
 const PageTransition = dynamic(() => import('@/components/PageTransition'), { ssr: false });
 
+// Import ThemeToggle with dynamic loading
+const ThemeToggle = dynamic(() => import('@/components/ThemeToggle').then(mod => mod.ThemeToggle), {
+  ssr: false,
+  loading: () => (
+    <div className="w-10 h-10 flex items-center justify-center">
+      <div className="w-6 h-6 bg-gray-200 rounded-full animate-pulse"></div>
+    </div>
+  )
+});
+
 // Load fonts with display:swap for better performance
 const inter = Inter({ 
   subsets: ['latin'],
@@ -101,8 +111,17 @@ export default function RootLayout({
             z-index: 9999;
             transition: opacity 0.3s ease;
           }
+          :root[class~="dark"] .initial-loader {
+            background-color: #111827;
+            color: #fff;
+          }
           .initial-loader-content {
             text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 1.5rem;
           }
           .initial-loader-spinner {
             width: 50px;
@@ -111,6 +130,11 @@ export default function RootLayout({
             border-top: 5px solid #4f46e5;
             border-radius: 50%;
             animation: spin 1s linear infinite;
+            margin: 0 auto;
+          }
+          :root[class~="dark"] .initial-loader-spinner {
+            border-color: #374151;
+            border-top-color: #4f46e5;
           }
           @keyframes spin {
             0% { transform: rotate(0deg); }
@@ -173,28 +197,26 @@ export default function RootLayout({
         <div id="initial-loader" className="initial-loader">
           <div className="initial-loader-content">
             <div className="initial-loader-spinner"></div>
-            <p className="mt-4">Loading AI Tutor...</p>
+            <p style={{ fontSize: '1rem', fontWeight: 500 }}>Loading AI Tutor...</p>
           </div>
         </div>
         
         <div id="content-container" className="opacity-0 transition-opacity duration-500">
           <Providers>
-            {/* Add page transition loading indicator */}
             <PageTransition />
-            
-            <div className="min-h-screen flex flex-col">
+            <div className="min-h-screen flex flex-col bg-white dark:bg-gray-900">
               <Suspense fallback={
-                <header className="bg-white border-b sticky top-0 z-30">
+                <header className="bg-white dark:bg-gray-900 border-b dark:border-gray-800 sticky top-0 z-30">
                   <div className="container mx-auto px-5 py-4 flex justify-between items-center">
                     <div className="text-2xl font-bold text-primary-600 tracking-tight">AI Tutor</div>
                     <div className="flex items-center space-x-2">
-                      <div className="w-8 h-8 bg-gray-200 rounded-full animate-pulse"></div>
-                      <div className="w-10 h-8 bg-gray-200 rounded animate-pulse"></div>
+                      <div className="w-8 h-8 bg-gray-200 dark:bg-gray-700 rounded-full animate-pulse"></div>
+                      <div className="w-10 h-8 bg-gray-200 dark:bg-gray-700 rounded animate-pulse"></div>
                     </div>
                   </div>
                 </header>
               }>
-                <header className="bg-white border-b sticky top-0 z-30">
+                <header className="bg-white dark:bg-gray-900 border-b dark:border-gray-800 sticky top-0 z-30">
                   <div className="container mx-auto px-5 py-4 flex justify-between items-center">
                     <Link href="/" className="text-2xl font-bold text-primary-600 tracking-tight">
                       AI Tutor
@@ -203,8 +225,9 @@ export default function RootLayout({
                       <NavLinks />
                     </div>
                     
-                    <div className="flex items-center">
-                      <Suspense fallback={<div className="w-10 h-10 flex items-center justify-center"><div className="w-6 h-6 bg-gray-200 rounded-full animate-pulse"></div></div>}>
+                    <div className="flex items-center space-x-4">
+                      <ThemeToggle />
+                      <Suspense fallback={<div className="w-10 h-10 flex items-center justify-center"><div className="w-6 h-6 bg-gray-200 dark:bg-gray-700 rounded-full animate-pulse"></div></div>}>
                         <NotificationBell />
                       </Suspense>
                       <MobileNav />
@@ -213,10 +236,10 @@ export default function RootLayout({
                 </header>
               </Suspense>
               
-              <main className="flex-1">
+              <main className="flex-1 bg-white dark:bg-gray-900">
                 <Suspense fallback={
                   <div className="container mx-auto px-5 py-8">
-                    <div className="w-full h-64 bg-gray-100 rounded-lg animate-pulse"></div>
+                    <div className="w-full h-64 bg-gray-100 dark:bg-gray-800 rounded-lg animate-pulse"></div>
                   </div>
                 }>
                   {children}
@@ -224,9 +247,9 @@ export default function RootLayout({
               </main>
               
               <Suspense fallback={
-                <footer className="bg-white border-t py-8">
+                <footer className="bg-white dark:bg-gray-900 border-t dark:border-gray-800 py-8">
                   <div className="container mx-auto px-5">
-                    <div className="w-full h-20 bg-gray-100 rounded animate-pulse"></div>
+                    <div className="w-full h-20 bg-gray-100 dark:bg-gray-800 rounded animate-pulse"></div>
                   </div>
                 </footer>
               }>

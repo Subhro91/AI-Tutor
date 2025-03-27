@@ -70,8 +70,8 @@ export default function NotificationSettings({
     <form onSubmit={handleSubmit}>
       <div className="space-y-6">
         <div>
-          <h2 className="text-xl font-semibold mb-4">Notification Settings</h2>
-          <p className="text-gray-600 text-sm mb-6">
+          <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-gray-100">Notification Settings</h2>
+          <p className="text-gray-600 dark:text-gray-300 text-sm mb-6">
             Manage how you receive notifications and updates from AI Tutor.
           </p>
         </div>
@@ -81,8 +81,8 @@ export default function NotificationSettings({
           {/* In-app notifications */}
           <div className="flex items-center justify-between">
             <div>
-              <Label className="text-base font-medium">In-app Notifications</Label>
-              <p className="text-sm text-gray-600">
+              <Label className="text-base font-medium text-gray-900 dark:text-gray-100">In-app Notifications</Label>
+              <p className="text-sm text-gray-600 dark:text-gray-300">
                 Receive notifications about your progress and achievements
               </p>
             </div>
@@ -90,7 +90,7 @@ export default function NotificationSettings({
             <button
               type="button"
               className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 ${
-                preferences.notifications ? 'bg-primary-600' : 'bg-gray-200'
+                preferences.notifications ? 'bg-primary-600' : 'bg-gray-200 dark:bg-gray-700'
               }`}
               onClick={() => handleToggle('notifications')}
             >
@@ -105,8 +105,8 @@ export default function NotificationSettings({
           {/* Email updates */}
           <div className="flex items-center justify-between">
             <div>
-              <Label className="text-base font-medium">Email Updates</Label>
-              <p className="text-sm text-gray-600">
+              <Label className="text-base font-medium text-gray-900 dark:text-gray-100">Email Updates</Label>
+              <p className="text-sm text-gray-600 dark:text-gray-300">
                 Receive weekly summaries and important updates via email
               </p>
             </div>
@@ -114,7 +114,7 @@ export default function NotificationSettings({
             <button
               type="button"
               className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 ${
-                preferences.emailUpdates ? 'bg-primary-600' : 'bg-gray-200'
+                preferences.emailUpdates ? 'bg-primary-600' : 'bg-gray-200 dark:bg-gray-700'
               }`}
               onClick={() => handleToggle('emailUpdates')}
             >
@@ -128,9 +128,9 @@ export default function NotificationSettings({
         </div>
         
         {/* Additional information */}
-        <div className="bg-blue-50 p-4 rounded-md border border-blue-200">
-          <h3 className="font-medium text-blue-800 mb-2">Notification Types</h3>
-          <ul className="text-sm text-blue-700 space-y-1 list-disc list-inside">
+        <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-md border border-blue-200 dark:border-blue-800">
+          <h3 className="font-medium text-blue-800 dark:text-blue-300 mb-2">Notification Types</h3>
+          <ul className="text-sm text-blue-700 dark:text-blue-300 space-y-1 list-disc list-inside">
             <li>Learning streak reminders</li>
             <li>New achievements unlocked</li>
             <li>Subject completion milestones</li>
@@ -141,13 +141,13 @@ export default function NotificationSettings({
         
         {/* Success/Error Messages */}
         {successMessage && (
-          <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded">
+          <div className="bg-green-100 dark:bg-green-900/30 border border-green-400 dark:border-green-800 text-green-700 dark:text-green-400 px-4 py-3 rounded">
             {successMessage}
           </div>
         )}
         
         {errorMessage && (
-          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+          <div className="bg-red-100 dark:bg-red-900/30 border border-red-400 dark:border-red-800 text-red-700 dark:text-red-400 px-4 py-3 rounded">
             {errorMessage}
           </div>
         )}

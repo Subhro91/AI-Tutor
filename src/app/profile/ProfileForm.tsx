@@ -80,15 +80,15 @@ export default function ProfileForm({ profile, setProfile }: ProfileFormProps) {
     <form onSubmit={handleSubmit}>
       <div className="space-y-6">
         <div>
-          <h2 className="text-xl font-semibold mb-4">Profile Information</h2>
-          <p className="text-gray-600 text-sm mb-6">
+          <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-gray-100">Profile Information</h2>
+          <p className="text-gray-600 dark:text-gray-300 text-sm mb-6">
             Update your personal information and how others see you on the platform.
           </p>
         </div>
         
         {/* Display Name */}
         <div className="space-y-2">
-          <Label htmlFor="displayName">Display Name</Label>
+          <Label htmlFor="displayName" className="text-gray-900 dark:text-gray-100">Display Name</Label>
           <Input
             id="displayName"
             name="displayName"
@@ -96,47 +96,48 @@ export default function ProfileForm({ profile, setProfile }: ProfileFormProps) {
             onChange={handleChange}
             placeholder="Your name"
             required
+            className="bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
           />
         </div>
         
         {/* Email (Read Only) */}
         <div className="space-y-2">
-          <Label htmlFor="email">Email</Label>
+          <Label htmlFor="email" className="text-gray-900 dark:text-gray-100">Email</Label>
           <Input
             id="email"
             name="email"
             value={formData.email}
             readOnly
             disabled
-            className="bg-gray-50"
+            className="bg-gray-50 dark:bg-gray-700 text-gray-500 dark:text-gray-400"
           />
-          <p className="text-xs text-gray-500">Email cannot be changed</p>
+          <p className="text-xs text-gray-500 dark:text-gray-400">Email cannot be changed</p>
         </div>
         
         {/* Bio */}
         <div className="space-y-2">
-          <Label htmlFor="bio">Bio</Label>
+          <Label htmlFor="bio" className="text-gray-900 dark:text-gray-100">Bio</Label>
           <textarea
             id="bio"
             name="bio"
             value={formData.bio}
             onChange={handleChange}
             placeholder="Tell us a bit about yourself"
-            className="form-input min-h-20"
+            className="form-input min-h-20 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 border-gray-200 dark:border-gray-700 focus:ring-primary-500 dark:focus:ring-primary-400"
             rows={4}
           />
-          <p className="text-xs text-gray-500">Brief description for your profile</p>
+          <p className="text-xs text-gray-500 dark:text-gray-400">Brief description for your profile</p>
         </div>
         
         {/* Success/Error Messages */}
         {successMessage && (
-          <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded">
+          <div className="bg-green-100 dark:bg-green-900/30 border border-green-400 dark:border-green-800 text-green-700 dark:text-green-400 px-4 py-3 rounded">
             {successMessage}
           </div>
         )}
         
         {errorMessage && (
-          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+          <div className="bg-red-100 dark:bg-red-900/30 border border-red-400 dark:border-red-800 text-red-700 dark:text-red-400 px-4 py-3 rounded">
             {errorMessage}
           </div>
         )}

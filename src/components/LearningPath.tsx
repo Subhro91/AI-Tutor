@@ -61,7 +61,7 @@ export default function LearningPath({ subject, completedTopics = [] }: Learning
   
   return (
     <div className="space-y-6">
-      <h2 className="text-2xl font-bold mb-4" style={{ color: subject.color }}>
+      <h2 className="text-2xl font-bold mb-4 text-gray-900 dark:text-gray-100" style={{ color: subject.color }}>
         {subject.name} Learning Path
       </h2>
       
@@ -84,41 +84,41 @@ export default function LearningPath({ subject, completedTopics = [] }: Learning
               key={topic.id}
               className={`border rounded-lg overflow-hidden ${
                 isAvailable 
-                  ? 'border-gray-200' 
-                  : 'border-gray-200 bg-gray-50 opacity-75'
+                  ? 'border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800' 
+                  : 'border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/50 opacity-75'
               }`}
             >
               {/* Topic Header */}
               <div 
                 className={`p-4 flex items-center justify-between cursor-pointer ${
-                  isAvailable ? 'hover:bg-gray-50' : ''
+                  isAvailable ? 'hover:bg-gray-50 dark:hover:bg-gray-800' : ''
                 }`}
                 onClick={() => isAvailable && toggleTopic(topic.id)}
               >
                 <div className="flex-1">
                   <div className="flex items-center">
-                    <h3 className="text-lg font-medium">{index + 1}. {topic.title}</h3>
+                    <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100">{index + 1}. {topic.title}</h3>
                     <span className={`ml-3 text-xs px-2 py-1 rounded-full ${
                       topic.difficulty === 'beginner' 
-                        ? 'bg-green-100 text-green-800' 
+                        ? 'bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300' 
                         : topic.difficulty === 'intermediate'
-                          ? 'bg-yellow-100 text-yellow-800'
-                          : 'bg-red-100 text-red-800'
+                          ? 'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-300'
+                          : 'bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-300'
                     }`}>
                       {topic.difficulty}
                     </span>
                   </div>
                   
-                  <p className="text-sm text-gray-600 mt-1">{topic.description}</p>
+                  <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">{topic.description}</p>
                   
                   {/* Progress Bar */}
-                  <div className="w-full bg-gray-200 rounded-full h-1.5 mt-2">
+                  <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-1.5 mt-2">
                     <div 
-                      className="bg-green-500 h-1.5 rounded-full transition-all duration-300" 
+                      className="bg-green-500 dark:bg-green-600 h-1.5 rounded-full transition-all duration-300" 
                       style={{ width: `${progressPercentage}%` }}
                     ></div>
                   </div>
-                  <p className="text-xs text-gray-500 mt-1">
+                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
                     {completedSubtopics} of {totalSubtopics} complete ({progressPercentage}%)
                   </p>
                 </div>
@@ -128,12 +128,12 @@ export default function LearningPath({ subject, completedTopics = [] }: Learning
                     <button className={`p-1 rounded transition-transform duration-200 ${
                       isExpanded ? 'transform rotate-180' : ''
                     }`}>
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-500 dark:text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                       </svg>
                     </button>
                   ) : (
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-400 dark:text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                     </svg>
                   )}
@@ -142,15 +142,15 @@ export default function LearningPath({ subject, completedTopics = [] }: Learning
               
               {/* Subtopics (Collapsed/Expanded) */}
               {isAvailable && isExpanded && (
-                <div className="border-t border-gray-200 divide-y divide-gray-200">
+                <div className="border-t border-gray-200 dark:border-gray-700 divide-y divide-gray-200 dark:divide-gray-700">
                   {topic.subtopics.map((subtopic, subtopicIndex) => {
                     const isCompleted = isSubtopicCompleted(subtopic.id);
                     
                     return (
                       <div 
                         key={subtopic.id}
-                        className={`p-4 pl-8 hover:bg-gray-50 ${
-                          isCompleted ? 'bg-green-50' : ''
+                        className={`p-4 pl-8 hover:bg-gray-50 dark:hover:bg-gray-800 ${
+                          isCompleted ? 'bg-green-50 dark:bg-green-900/20' : ''
                         }`}
                         onClick={() => handleSubtopicClick(topic.id, subtopic.id)}
                       >
@@ -158,8 +158,8 @@ export default function LearningPath({ subject, completedTopics = [] }: Learning
                           <div 
                             className={`flex-shrink-0 h-5 w-5 rounded-full flex items-center justify-center mr-3 mt-0.5 ${
                               isCompleted 
-                                ? 'bg-green-500 text-white' 
-                                : 'border border-gray-300 bg-white'
+                                ? 'bg-green-500 dark:bg-green-600 text-white' 
+                                : 'border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800'
                             }`}
                           >
                             {isCompleted && (
@@ -170,13 +170,13 @@ export default function LearningPath({ subject, completedTopics = [] }: Learning
                           </div>
                           
                           <div>
-                            <h4 className={`text-base font-medium ${isCompleted ? 'text-green-700' : ''}`}>
+                            <h4 className={`text-base font-medium ${isCompleted ? 'text-green-700 dark:text-green-400' : 'text-gray-900 dark:text-gray-100'}`}>
                               {index + 1}.{subtopicIndex + 1} {subtopic.title}
                             </h4>
-                            <p className="text-sm text-gray-600 mt-1">{subtopic.description}</p>
+                            <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">{subtopic.description}</p>
                             
                             <div className="mt-2">
-                              <span className="text-xs text-gray-500">
+                              <span className="text-xs text-gray-500 dark:text-gray-400">
                                 {subtopic.keyPoints.length} key points • {subtopic.resources.length} learning resources
                               </span>
                             </div>

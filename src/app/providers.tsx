@@ -20,11 +20,37 @@ const AuthContext = createContext<{
   authError: false
 });
 
-// Custom hook to use the auth context
-export const useAuth = () => useContext(AuthContext);
+type ThemeContextType = {
+  theme: 'light' | 'dark';
+  toggleTheme: () => void;
+};
+
+// Create a ThemeContext
+const ThemeContext = createContext<ThemeContextType>({
+  theme: 'light',
+  toggleTheme: () => {},
+});
+
+// Custom hooks to use the contexts
+export const useAuth = () => {
+  const context = useContext(AuthContext);
+  if (context === undefined) {
+    throw new Error('useAuth must be used within an AuthProvider');
+  }
+  return context;
+};
+
+export const useTheme = () => {
+  const context = useContext(ThemeContext);
+  if (context === undefined) {
+    throw new Error('useTheme must be used within a ThemeProvider');
+  }
+  return context;
+};
 
 // Create a persistent session key to track auth sessions
 const SESSION_KEY = 'ai_tutor_session_valid';
+const THEME_KEY = 'ai_tutor_theme';
 
 // Memoized Providers component for better performance
 const ProvidersComponent = ({ children }: { children: React.ReactNode }) => {
@@ -33,7 +59,35 @@ const ProvidersComponent = ({ children }: { children: React.ReactNode }) => {
   const [loading, setLoading] = useState<boolean>(true);
   const [streakCount, setStreakCount] = useState<number | null>(null);
   const [authError, setAuthError] = useState<boolean>(false);
+  const [theme, setTheme] = useState<'light' | 'dark'>(() => {
+    if (typeof window !== 'undefined') {
+      return (localStorage.getItem(THEME_KEY) as 'light' | 'dark') || 'light';
+    }
+    return 'light';
+  });
   const [initAttempted, setInitAttempted] = useState<boolean>(false);
+
+  // Theme toggle function
+  const toggleTheme = () => {
+    const newTheme = theme === 'light' ? 'dark' : 'light';
+    setTheme(newTheme);
+    localStorage.setItem(THEME_KEY, newTheme);
+    if (newTheme === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  };
+
+  // Initialize theme on mount
+  useEffect(() => {
+    const savedTheme = localStorage.getItem(THEME_KEY) as 'light' | 'dark';
+    if (savedTheme === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, []);
 
   // Sign out function - memoized
   const signOut = useMemo(() => async () => {
@@ -169,8 +223,8 @@ const ProvidersComponent = ({ children }: { children: React.ReactNode }) => {
     return () => clearTimeout(timeoutId);
   }, [loading]);
 
-  // Memoize the context value to prevent unnecessary re-renders
-  const contextValue = useMemo(() => ({
+  // Memoize the context values to prevent unnecessary re-renders
+  const authContextValue = useMemo(() => ({
     user,
     loading: loading || !firebaseReady,
     signOut,
@@ -178,9 +232,16 @@ const ProvidersComponent = ({ children }: { children: React.ReactNode }) => {
     authError
   }), [user, loading, firebaseReady, signOut, streakCount, authError]);
 
+  const themeContextValue = useMemo(() => ({
+    theme,
+    toggleTheme
+  }), [theme]);
+
   return (
-    <AuthContext.Provider value={contextValue}>
-      {children}
+    <AuthContext.Provider value={authContextValue}>
+      <ThemeContext.Provider value={themeContextValue}>
+        {children}
+      </ThemeContext.Provider>
     </AuthContext.Provider>
   );
 };

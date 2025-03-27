@@ -44,7 +44,7 @@ export default function SubjectsPage() {
           <h1 className="text-4xl font-medium mb-4 tracking-tight">
             All Subjects
           </h1>
-          <p className="text-gray-600 text-lg">
+          <p className="text-gray-600 dark:text-gray-300 text-lg">
             Explore our range of subjects and find what interests you the most
           </p>
         </div>
@@ -56,16 +56,16 @@ export default function SubjectsPage() {
               className="subject-card" 
               style={{ borderLeft: `4px solid ${subject.color}` }}
             >
-              <h3 className="text-xl font-medium mb-2">{subject.name}</h3>
-              <p className="text-gray-600 mb-4">{subject.description}</p>
+              <h3 className="text-xl font-medium mb-2 text-gray-900 dark:text-gray-100">{subject.name}</h3>
+              <p className="text-gray-600 dark:text-gray-300 mb-4">{subject.description}</p>
               
-              <div className="text-sm text-gray-500 mb-3">
+              <div className="text-sm text-gray-500 dark:text-gray-400 mb-3">
                 {subject.topics.length} topics • {subject.topics.reduce((count, topic) => count + topic.subtopics.length, 0)} lessons
               </div>
               
               <div className="mb-6">
-                <div className="font-medium text-sm mb-2">Topics include:</div>
-                <ul className="pl-5 list-disc space-y-1 text-gray-600 text-sm">
+                <div className="font-medium text-sm mb-2 dark:text-gray-200">Topics include:</div>
+                <ul className="pl-5 list-disc space-y-1 text-gray-600 dark:text-gray-300 text-sm">
                   {subject.topics.slice(0, 3).map(topic => (
                     <li key={topic.id}>{topic.title}</li>
                   ))}

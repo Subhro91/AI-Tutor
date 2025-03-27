@@ -19,7 +19,7 @@ function WelcomeSection() {
       <h1 className="text-4xl font-medium mb-4 tracking-tight">
         Welcome to your learning journey
       </h1>
-      <p className="text-gray-600 text-lg">
+      <p className="text-gray-600 dark:text-gray-300 text-lg">
         Choose a subject to begin your personalized learning experience with AI Tutor
       </p>
     </div>

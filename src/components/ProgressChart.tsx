@@ -25,8 +25,8 @@ const subjectNames: Record<string, string> = {
 const LoadingSkeleton = () => (
   <div className="card flex items-center justify-center p-12">
     <div className="animate-pulse flex flex-col items-center">
-      <div className="h-8 bg-gray-200 rounded w-1/3 mb-4"></div>
-      <div className="h-40 bg-gray-200 rounded-lg w-full"></div>
+      <div className="h-8 bg-gray-200 dark:bg-gray-700 rounded w-1/3 mb-4"></div>
+      <div className="h-40 bg-gray-200 dark:bg-gray-700 rounded-lg w-full"></div>
     </div>
   </div>
 );
@@ -35,12 +35,12 @@ const LoadingSkeleton = () => (
 const EmptyState = () => (
   <div className="card">
     <div className="p-8 text-center">
-      <h3 className="text-xl font-medium mb-3">Your Learning Journey</h3>
-      <p className="text-gray-600 mb-6 max-w-md mx-auto">
+      <h3 className="text-xl font-medium mb-3 text-gray-900 dark:text-gray-100">Your Learning Journey</h3>
+      <p className="text-gray-600 dark:text-gray-300 mb-6 max-w-md mx-auto">
         You haven't started learning any subjects yet. Choose a subject from above to begin your learning journey!
       </p>
-      <div className="inline-flex items-center justify-center rounded-full bg-primary-50 p-3">
-        <svg className="w-6 h-6 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <div className="inline-flex items-center justify-center rounded-full bg-primary-50 dark:bg-primary-900/20 p-3">
+        <svg className="w-6 h-6 text-primary-600 dark:text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
         </svg>
       </div>
@@ -54,41 +54,41 @@ const SubjectProgressItem = React.memo(({ subject }: { subject: ProgressData }) 
   const progressPercentage = Math.min(subject.completedTopics * 10, 100);
   
   return (
-    <div className="border-b pb-8 last:border-b-0 last:pb-0">
+    <div className="border-b dark:border-gray-700 pb-8 last:border-b-0 last:pb-0">
       <div className="flex flex-col sm:flex-row justify-between mb-4">
         <div>
-          <h4 className="font-medium text-lg">{subject.subjectName}</h4>
-          <p className="text-sm text-gray-500 mt-1">
+          <h4 className="font-medium text-lg text-gray-900 dark:text-gray-100">{subject.subjectName}</h4>
+          <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
             {subject.lastAccessed 
               ? `Last studied: ${subject.lastAccessed.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}`
               : 'Not started yet'}
           </p>
         </div>
         <div className="mt-2 sm:mt-0">
-          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary-50 text-primary-700">
+          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary-50 dark:bg-primary-900/20 text-primary-700 dark:text-primary-400">
             {subject.completedTopics} topics completed
           </span>
         </div>
       </div>
       
       <div className="grid grid-cols-2 gap-6 mb-5">
-        <div className="bg-gray-50 rounded-lg p-4">
-          <p className="text-sm text-gray-600 mb-1">Messages exchanged</p>
-          <p className="text-2xl font-medium">{subject.messagesCount}</p>
+        <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-4">
+          <p className="text-sm text-gray-600 dark:text-gray-300 mb-1">Messages exchanged</p>
+          <p className="text-2xl font-medium text-gray-900 dark:text-gray-100">{subject.messagesCount}</p>
         </div>
-        <div className="bg-gray-50 rounded-lg p-4">
-          <p className="text-sm text-gray-600 mb-1">Topics completed</p>
-          <p className="text-2xl font-medium">{subject.completedTopics}</p>
+        <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-4">
+          <p className="text-sm text-gray-600 dark:text-gray-300 mb-1">Topics completed</p>
+          <p className="text-2xl font-medium text-gray-900 dark:text-gray-100">{subject.completedTopics}</p>
         </div>
       </div>
       
       {/* Progress Bar */}
       <div>
         <div className="flex justify-between items-center mb-2 text-sm">
-          <span className="text-gray-600">Progress</span>
-          <span className="font-medium">{progressPercentage}%</span>
+          <span className="text-gray-600 dark:text-gray-300">Progress</span>
+          <span className="font-medium text-gray-900 dark:text-gray-100">{progressPercentage}%</span>
         </div>
-        <div className="w-full bg-gray-100 rounded-full h-3">
+        <div className="w-full bg-gray-100 dark:bg-gray-700 rounded-full h-3">
           <div 
             className="bg-primary-600 h-3 rounded-full transition-all duration-500" 
             style={{ width: `${progressPercentage}%` }}
@@ -173,9 +173,9 @@ export default function ProgressChart() {
     }
 
     return (
-      <div className="card overflow-hidden">
+      <div className="card overflow-hidden border dark:border-gray-700">
         <div className="p-6 md:p-8">
-          <h3 className="text-xl font-medium mb-6">Learning Progress</h3>
+          <h3 className="text-xl font-medium mb-6 text-gray-900 dark:text-gray-100">Learning Progress</h3>
           
           <div className="space-y-8">
             {progressData.map((subject) => (

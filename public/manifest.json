@@ -10,9 +10,10 @@
   "description": "AI-powered tutoring system that adapts to your learning style",
   "icons": [
     {
-      "src": "/favicon.ico",
-      "sizes": "64x64",
-      "type": "image/x-icon"
+      "src": "/icons/icon.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any"
     }
   ]
 } 

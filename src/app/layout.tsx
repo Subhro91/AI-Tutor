@@ -88,6 +88,9 @@ export default function RootLayout({
         {/* Add preconnect for image hosting */}
         <link rel="preconnect" href="https://images.unsplash.com" crossOrigin="anonymous" />
         
+        {/* Favicon */}
+        <link rel="icon" href="/icons/icon.svg" type="image/svg+xml" />
+        
         {/* PWA Manifest */}
         <link rel="manifest" href="/manifest.json" />
         <meta name="theme-color" content="#4f46e5" />

@@ -1,8 +1,11 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, FormEvent } from 'react';
 import { useAuth } from '@/app/providers';
 import { saveChatMessage, createOrUpdateUserProgress } from '@/lib/firebase-db';
+import { CornerDownLeft } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { ChatInput as ChatInputUI } from '@/components/ui/chat-input';
 import LoadingSpinner from './LoadingSpinner';
 
 interface ChatInputProps {
@@ -16,7 +19,7 @@ export default function ChatInput({ subjectId, onSendMessage, isProcessing = fal
   const [message, setMessage] = useState('');
   const [isSending, setIsSending] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     
     if (!message.trim() || !user || isSending || isProcessing) return;
@@ -57,37 +60,44 @@ export default function ChatInput({ subjectId, onSendMessage, isProcessing = fal
   };
 
   return (
-    <form onSubmit={handleSubmit} className="border-t border-border bg-card px-3 py-4 sm:px-4 sm:py-5 sticky bottom-0">
-      <div className="flex items-center gap-2 max-w-4xl mx-auto relative">
-        {isProcessing && (
-          <div className="absolute -top-12 left-0 w-full flex items-center p-2 bg-background border border-border rounded-md">
-            <LoadingSpinner size="sm" />
-            <span className="ml-2 text-sm text-muted-foreground">AI Tutor is thinking...</span>
-          </div>
-        )}
-        <input
-          type="text"
+    <div className="border-t border-border bg-card px-3 py-4 sm:px-4 sm:py-5 sticky bottom-0">
+      {isProcessing && (
+        <div className="absolute -top-12 left-0 w-full flex items-center p-2 bg-background border border-border rounded-md">
+          <LoadingSpinner size="sm" />
+          <span className="ml-2 text-sm text-muted-foreground">AI Tutor is thinking...</span>
+        </div>
+      )}
+      
+      <form
+        onSubmit={handleSubmit}
+        className="relative rounded-lg border bg-background p-1 max-w-4xl mx-auto focus-within:border-primary"
+      >
+        <ChatInputUI
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           placeholder="Ask your tutor a question..."
-          className="input rounded-full pr-14 py-3 flex-grow text-base text-foreground bg-background border border-input"
+          className="min-h-12 resize-none rounded-lg bg-background border-0 p-3 shadow-none"
           disabled={isSending || isProcessing || !user}
         />
-        <button
-          type="submit"
-          className="absolute right-2 rounded-full p-2 bg-primary text-primary-foreground hover:bg-primary/90 disabled:opacity-50 transition-colors"
-          disabled={isSending || isProcessing || !message.trim() || !user}
-          aria-label="Send message"
-        >
-          {isSending ? (
-            <span className="inline-block w-5 h-5 border-2 border-primary-foreground border-t-transparent rounded-full animate-spin"></span>
-          ) : (
-            <svg className="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
-            </svg>
-          )}
-        </button>
-      </div>
-    </form>
+        
+        <div className="flex justify-end p-3 pt-0">
+          <Button 
+            type="submit" 
+            size="sm" 
+            className="gap-1.5"
+            disabled={isSending || isProcessing || !message.trim() || !user}
+          >
+            {isSending ? (
+              <span className="inline-block w-4 h-4 border-2 border-primary-foreground border-t-transparent rounded-full animate-spin"></span>
+            ) : (
+              <>
+                Send Message
+                <CornerDownLeft className="size-3.5" />
+              </>
+            )}
+          </Button>
+        </div>
+      </form>
+    </div>
   );
 } 

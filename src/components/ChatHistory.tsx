@@ -6,6 +6,11 @@ import { getChatHistory, ChatMessage } from '@/lib/firebase-db';
 import ReactMarkdown from 'react-markdown';
 import rehypeSanitize from 'rehype-sanitize';
 import ContentLoader from './ContentLoader';
+import { 
+  ChatBubble, 
+  ChatBubbleMessage 
+} from '@/components/ui/chat-bubble';
+import { ChatMessageList } from '@/components/ui/chat-message-list';
 
 interface ChatHistoryProps {
   subjectId: string;
@@ -16,7 +21,6 @@ export default function ChatHistory({ subjectId, refreshChat = 0 }: ChatHistoryP
   const { user } = useAuth();
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const messagesEndRef = useRef<HTMLDivElement>(null);
   const chatContainerRef = useRef<HTMLDivElement>(null);
   const prevMessagesLengthRef = useRef<number>(0);
   const [initialLoadComplete, setInitialLoadComplete] = useState(false);
@@ -45,19 +49,6 @@ export default function ChatHistory({ subjectId, refreshChat = 0 }: ChatHistoryP
     return () => container.removeEventListener('scroll', handleScroll);
   }, [checkIfAtBottom]);
 
-  // Function to scroll to the latest message
-  const scrollToLatestMessage = useCallback((behavior: ScrollBehavior = 'smooth') => {
-    if (!messagesEndRef.current) return;
-    
-    // Use setTimeout to ensure DOM is updated before scrolling
-    setTimeout(() => {
-      messagesEndRef.current?.scrollIntoView({
-        behavior,
-        block: 'end',
-      });
-    }, 100);
-  }, []);
-
   // Fetch chat history when component mounts or when subject changes
   useEffect(() => {
     async function fetchChatHistory() {
@@ -72,8 +63,6 @@ export default function ChatHistory({ subjectId, refreshChat = 0 }: ChatHistoryP
         // Mark initial load as complete
         setInitialLoadComplete(true);
         
-        // Scroll to bottom on initial load with instant behavior
-        scrollToLatestMessage('auto');
         // Initial state is at bottom
         isAtBottomRef.current = true;
       } catch (error) {
@@ -84,7 +73,7 @@ export default function ChatHistory({ subjectId, refreshChat = 0 }: ChatHistoryP
     }
 
     fetchChatHistory();
-  }, [user, subjectId, scrollToLatestMessage]);
+  }, [user, subjectId]);
 
   // Update messages when they change without setting loading state
   useEffect(() => {
@@ -108,22 +97,8 @@ export default function ChatHistory({ subjectId, refreshChat = 0 }: ChatHistoryP
             setMessages(history);
             prevMessagesLengthRef.current = history.length;
             
-            // If user was already at bottom, scroll to new content
-            if (wasAtBottom) {
-              setTimeout(() => scrollToLatestMessage(), 50);
-            } else {
-              // If not at bottom, maintain relative scroll position
-              setTimeout(() => {
-                if (container) {
-                  // Calculate how much content was added
-                  const newScrollHeight = container.scrollHeight;
-                  const addedHeight = newScrollHeight - scrollHeight;
-                  
-                  // Adjust scroll position to maintain the same relative view
-                  container.scrollTop = scrollTop + addedHeight;
-                }
-              }, 50);
-            }
+            // Update autoScroll based on whether user was at bottom
+            isAtBottomRef.current = wasAtBottom;
           } else {
             // No new messages, just update the state
             setMessages(history);
@@ -136,49 +111,7 @@ export default function ChatHistory({ subjectId, refreshChat = 0 }: ChatHistoryP
       
       updateMessages();
     }
-  }, [user, subjectId, refreshChat, isLoading, initialLoadComplete, scrollToLatestMessage]);
-
-  // Message component for better rendering
-  const Message = React.memo(({ message, isLast }: { message: ChatMessage, isLast: boolean }) => (
-    <div 
-      className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'} mb-4`}
-      id={`message-${message.id}`}
-      ref={isLast ? messagesEndRef : undefined}
-    >
-      <div 
-        className={`rounded-xl px-5 py-3 max-w-[85%] sm:max-w-[75%] shadow-sm ${
-          message.role === 'user' 
-            ? 'bg-primary/10 text-foreground ml-auto' 
-            : 'bg-card border border-border text-foreground'
-        }`}
-      >
-        <div className="flex justify-between items-center mb-2">
-          <span className={`font-medium text-sm ${message.role === 'user' ? 'text-primary' : 'text-foreground'}`}>
-            {message.role === 'user' ? 'You' : 'AI Tutor'}
-          </span>
-          {message.timestamp && (
-            <span className="text-xs text-muted-foreground ml-2">
-              {new Date(message.timestamp.toDate()).toLocaleTimeString([], {
-                hour: '2-digit',
-                minute: '2-digit'
-              })}
-            </span>
-          )}
-        </div>
-        <div className="prose prose-sm max-w-none text-foreground dark:prose-invert leading-relaxed">
-          {message.role === 'assistant' ? (
-            <ReactMarkdown rehypePlugins={[rehypeSanitize]}>
-              {message.content}
-            </ReactMarkdown>
-          ) : (
-            message.content
-          )}
-        </div>
-      </div>
-    </div>
-  ));
-
-  Message.displayName = 'Message';
+  }, [user, subjectId, refreshChat, isLoading, initialLoadComplete]);
 
   if (isLoading) {
     return <ContentLoader type="chat" count={3} />;
@@ -203,17 +136,61 @@ export default function ChatHistory({ subjectId, refreshChat = 0 }: ChatHistoryP
   return (
     <div 
       ref={chatContainerRef}
-      className="flex flex-col overflow-y-auto h-full px-2 py-4"
+      className="flex flex-col h-full overflow-hidden"
     >
-      <div className="space-y-4">
+      <ChatMessageList autoScroll={isAtBottomRef.current}>
         {messages.map((message, index) => (
-          <Message 
-            key={message.id || `message-${index}`} 
-            message={message} 
-            isLast={index === messages.length - 1}
-          />
+          <ChatBubble
+            key={message.id || `message-${index}`}
+            variant={message.role === 'user' ? 'sent' : 'received'}
+          >
+            <ChatBubbleMessage
+              variant={message.role === 'user' ? 'sent' : 'received'}
+              className="mx-2"
+            >
+              <div className="flex justify-between items-center mb-2">
+                <span className={`font-medium text-sm ${message.role === 'user' ? 'text-white' : ''}`}>
+                  {message.role === 'user' ? 'You' : 'AI Tutor'}
+                </span>
+                {message.timestamp && (
+                  <span className={`text-xs ml-2 ${message.role === 'user' ? 'text-blue-100' : 'text-muted-foreground'}`}>
+                    {new Date(message.timestamp.toDate()).toLocaleTimeString([], {
+                      hour: '2-digit',
+                      minute: '2-digit'
+                    })}
+                  </span>
+                )}
+              </div>
+              <div className={`prose prose-sm max-w-none ${message.role === 'user' ? 'text-white dark:text-white' : 'dark:prose-invert text-foreground'} leading-relaxed`}>
+                {message.role === 'assistant' ? (
+                  <ReactMarkdown 
+                    rehypePlugins={[rehypeSanitize]}
+                    components={{
+                      pre: ({ node, ...props }) => (
+                        <pre className="bg-muted p-2 rounded-md overflow-x-auto text-xs" {...props} />
+                      ),
+                      code: ({ node, className, ...props }) => {
+                        const match = /language-(\w+)/.exec(className || '');
+                        const isInline = !className || !match;
+                        return isInline ? 
+                          <code className="bg-muted px-1 py-0.5 rounded text-xs" {...props} /> :
+                          <code className={className} {...props} />;
+                      },
+                      a: ({ node, ...props }) => (
+                        <a className={`${message.role === 'user' ? 'text-white underline' : 'text-primary hover:underline'}`} {...props} />
+                      )
+                    }}
+                  >
+                    {message.content}
+                  </ReactMarkdown>
+                ) : (
+                  message.content
+                )}
+              </div>
+            </ChatBubbleMessage>
+          </ChatBubble>
         ))}
-      </div>
+      </ChatMessageList>
     </div>
   );
 } 
